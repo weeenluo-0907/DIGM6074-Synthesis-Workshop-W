@@ -1,19 +1,764 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>DIGM6074 Synthesis Workshop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>DIGM6074 Synthesis Workshop — Wen Luo</title>
+
+  <style>
+    :root {
+      --bg: #f5f4ef;
+      --text: #171717;
+      --muted: #77756f;
+      --line: #d7d5cf;
+      --accent: #2458d3;
+      --max-width: 1280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(calc(100% - 64px), var(--max-width));
+      margin: 0 auto;
+    }
+
+    /* ---------- HEADER ---------- */
+
+    header {
+      padding: 32px 0 28px;
+      border-bottom: 1px solid var(--text);
+    }
+
+    .header-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .site-name {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+      font-size: 13px;
+      letter-spacing: 0.01em;
+    }
+
+    nav a {
+      color: var(--muted);
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--text);
+    }
+
+    /* ---------- HERO ---------- */
+
+    .hero {
+      padding: 92px 0 110px;
+    }
+
+    .hero-number {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 1050px;
+      font-size: clamp(52px, 7.5vw, 112px);
+      line-height: 0.92;
+      letter-spacing: -0.055em;
+      font-weight: 500;
+    }
+
+    .hero-meta {
+      margin-top: 54px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      max-width: 850px;
+    }
+
+    .hero-meta p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ---------- SECTIONS ---------- */
+
+    section {
+      border-top: 1px solid var(--text);
+      padding: 30px 0 100px;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 30px;
+      margin-bottom: 68px;
+    }
+
+    .section-number {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(32px, 4vw, 58px);
+      line-height: 1;
+      letter-spacing: -0.035em;
+      font-weight: 500;
+    }
+
+    .section-body {
+      margin-left: 170px;
+      max-width: 880px;
+    }
+
+    .intro {
+      max-width: 760px;
+      font-size: 22px;
+      line-height: 1.45;
+      letter-spacing: -0.015em;
+    }
+
+    /* ---------- PROJECT ITEMS ---------- */
+
+    .item {
+      display: grid;
+      grid-template-columns: 110px 1fr 170px;
+      gap: 30px;
+      align-items: baseline;
+      padding: 22px 0 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .item:last-child {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .item-date {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 11px;
+      line-height: 1.4;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.045em;
+    }
+
+    .item-title {
+      font-size: 21px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .item-type {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .item-link {
+      justify-self: end;
+      font-size: 13px;
+      border-bottom: 1px solid var(--text);
+      padding-bottom: 2px;
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .item-link:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* ---------- FOOTER ---------- */
+
+    footer {
+      border-top: 1px solid var(--text);
+      padding: 28px 0 60px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .footer-grid div:last-child {
+      text-align: right;
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+
+    @media (max-width: 760px) {
+
+      .page {
+        width: min(calc(100% - 36px), var(--max-width));
+      }
+
+      .header-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      nav {
+        flex-wrap: wrap;
+        gap: 10px 20px;
+      }
+
+      .hero {
+        padding: 65px 0 80px;
+      }
+
+      .hero-meta {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      section {
+        padding-bottom: 70px;
+      }
+
+      .section-head {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-bottom: 44px;
+      }
+
+      .section-body {
+        margin-left: 0;
+      }
+
+      .intro {
+        font-size: 19px;
+      }
+
+      .item {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        padding: 22px 0;
+      }
+
+      .item-link {
+        justify-self: start;
+        margin-top: 6px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid div:last-child {
+        text-align: left;
+      }
+    }
+  </style>
 </head>
 
+
 <body>
-  <h1>DIGM6074 Synthesis Workshop</h1>
 
-  <p>Wen Luo</p>
+  <div class="page">
 
-  <h2>Project</h2>
-  <p>This website documents my project for DIGM 6074 Synthesis Workshop.</p>
+    <!-- HEADER -->
 
-  <h2>Development Log</h2>
-  <p>Project development in progress.</p>
+    <header>
+      <div class="header-grid">
+
+        <div class="site-name">
+          WEN LUO / DIGM 6074
+        </div>
+
+        <nav>
+          <a href="#overview">Overview</a>
+          <a href="#development">Development Log</a>
+          <a href="#presentations">Presentations</a>
+          <a href="#project">Final Project</a>
+          <a href="#paper">Research Paper</a>
+        </nav>
+
+      </div>
+    </header>
+
+
+    <!-- HERO -->
+
+    <main>
+
+      <div class="hero">
+
+        <div class="hero-number">
+          2026 / RESEARCH + PRACTICE
+        </div>
+
+        <h1>
+          DIGM6074<br>
+          Synthesis<br>
+          Workshop
+        </h1>
+
+        <div class="hero-meta">
+
+          <p>
+            <span class="label">Researcher</span>
+            Wen Luo<br>
+            PhD in Digital Media<br>
+            York University
+          </p>
+
+          <p>
+            <span class="label">Archive</span>
+            Development, experimentation,
+            presentations, project documentation,
+            and research writing.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- OVERVIEW -->
+
+      <section id="overview">
+
+        <div class="section-head">
+
+          <div class="section-number">
+            01
+          </div>
+
+          <h2>
+            Project Overview
+          </h2>
+
+        </div>
+
+        <div class="section-body">
+
+          <p class="intro">
+            This website documents the development of my work for
+            DIGM 6074 Synthesis Workshop, tracing the project through
+            technical experimentation, iterative development,
+            presentation, practice, and research writing.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- DEVELOPMENT LOG -->
+
+      <section id="development">
+
+        <div class="section-head">
+
+          <div class="section-number">
+            02
+          </div>
+
+          <h2>
+            Development Log
+          </h2>
+
+        </div>
+
+        <div class="section-body">
+
+
+          <div class="item">
+
+            <div class="item-date">
+              SEP–OCT<br>
+              2026
+            </div>
+
+            <div>
+              <div class="item-title">
+                Development Log 01
+              </div>
+
+              <div class="item-type">
+                Process notes / research / technical development
+              </div>
+            </div>
+
+            <a
+              class="item-link"
+              href="https://docs.google.com/document/d/1aW1G2oU3gI-m8Fwlw22Nr3LHEir8TfX4Wuay5fYkjKQ/edit?usp=sharing"
+              target="_blank"
+              rel="noopener">
+              Open document ↗
+            </a>
+
+          </div>
+
+
+          <div class="item">
+
+            <div class="item-date">
+              OCT<br>
+              2026
+            </div>
+
+            <div>
+              <div class="item-title">
+                Development Log 02
+              </div>
+
+              <div class="item-type">
+                Process notes / experiments
+              </div>
+            </div>
+
+            <a
+              class="item-link"
+              href="#"
+              target="_blank"
+              rel="noopener">
+              Coming soon
+            </a>
+
+          </div>
+
+
+          <div class="item">
+
+            <div class="item-date">
+              OCT<br>
+              2026
+            </div>
+
+            <div>
+              <div class="item-title">
+                Development Log 03
+              </div>
+
+              <div class="item-type">
+                Prototype development
+              </div>
+            </div>
+
+            <a
+              class="item-link"
+              href="#"
+              target="_blank"
+              rel="noopener">
+              Coming soon
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- PRESENTATIONS -->
+
+      <section id="presentations">
+
+        <div class="section-head">
+
+          <div class="section-number">
+            03
+          </div>
+
+          <h2>
+            Presentations
+          </h2>
+
+        </div>
+
+        <div class="section-body">
+
+
+          <div class="item">
+
+            <div class="item-date">
+              2026
+            </div>
+
+            <div>
+              <div class="item-title">
+                Project Presentation
+              </div>
+
+              <div class="item-type">
+                Slides / presentation documentation
+              </div>
+            </div>
+
+            <a
+              class="item-link"
+              href="#">
+              Coming soon
+            </a>
+
+          </div>
+
+
+          <div class="item">
+
+            <div class="item-date">
+              2026
+            </div>
+
+            <div>
+              <div class="item-title">
+                Final Presentation
+              </div>
+
+              <div class="item-type">
+                Final project presentation
+              </div>
+            </div>
+
+            <a
+              class="item-link"
+              href="#">
+              Coming soon
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- FINAL PROJECT -->
+
+      <section id="project">
+
+        <div class="section-head">
+
+          <div class="section-number">
+            04
+          </div>
+
+          <h2>
+            Final Project
+          </h2>
+
+        </div>
+
+        <div class="section-body">
+
+
+          <div class="item">
+
+            <div class="item-date">
+              FINAL
+            </div>
+
+            <div>
+              <div class="item-title">
+                Project Documentation
+              </div>
+
+              <div class="item-type">
+                System / interaction / technical documentation
+              </div>
+            </div>
+
+            <a
+              class="item-link"
+              href="#">
+              Coming soon
+            </a>
+
+          </div>
+
+
+          <div class="item">
+
+            <div class="item-date">
+              MEDIA
+            </div>
+
+            <div>
+              <div class="item-title">
+                Video Documentation
+              </div>
+
+              <div class="item-type">
+                Final work / installation / interaction
+              </div>
+            </div>
+
+            <a
+              class="item-link"
+              href="#">
+              Coming soon
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+      <!-- RESEARCH PAPER -->
+
+      <section id="paper">
+
+        <div class="section-head">
+
+          <div class="section-number">
+            05
+          </div>
+
+          <h2>
+            Research Paper
+          </h2>
+
+        </div>
+
+        <div class="section-body">
+
+
+          <div class="item">
+
+            <div class="item-date">
+              DRAFT
+            </div>
+
+            <div>
+              <div class="item-title">
+                Research Paper — Working Draft
+              </div>
+
+              <div class="item-type">
+                Research writing / ongoing
+              </div>
+            </div>
+
+            <a
+              class="item-link"
+              href="#">
+              Coming soon
+            </a>
+
+          </div>
+
+
+          <div class="item">
+
+            <div class="item-date">
+              FINAL
+            </div>
+
+            <div>
+              <div class="item-title">
+                Research Paper — Final
+              </div>
+
+              <div class="item-type">
+                PDF / final submission
+              </div>
+            </div>
+
+            <a
+              class="item-link"
+              href="#">
+              Coming soon
+            </a>
+
+          </div>
+
+
+        </div>
+
+      </section>
+
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+      <div class="footer-grid">
+
+        <div>
+          DIGM 6074 — Synthesis Workshop<br>
+          York University
+        </div>
+
+        <div>
+          Wen Luo<br>
+          2026
+        </div>
+
+      </div>
+
+    </footer>
+
+  </div>
+
 </body>
+
 </html>
